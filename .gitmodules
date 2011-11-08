@@ -1,0 +1,3 @@
+[submodule "kwing"]
+	path = kwing
+	url = git@github.com:giginet/kwing.coffee.git
