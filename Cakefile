@@ -1,3 +1,4 @@
+sys = require 'sys'
 exec = (require 'child_process').exec
 
 FILENAME = 'jubiol'
@@ -8,6 +9,11 @@ FILES = [
 task 'compile', 'compile and minify JUBIOL.', (options) ->
   outputErr = (err, stdout, stderr) ->
     throw err if err
-    console.log "#{stdout} #{stderr}"
-  exec "coffee -cj #{FILES.join ' '} -o #{FILENAME}.js", outputErr
+    if stdout or stderr
+      console.log "#{stdout} #{stderr}"
+  if FILES.size is 1
+    exec "coffee -c #{FILENAME}.js #{FILES[0]}", outputErr
+  else
+    exec "coffee -cj #{FILENAME} #{FILES.join ' '}", outputErr 
   exec "yuicompressor #{FILENAME}.js > #{FILENAME}.js", outputErr
+
