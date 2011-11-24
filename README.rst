@@ -1,5 +1,5 @@
 ============
-JUBIOL
+Jubiol
 ============
 
 Jubiol is a new-type shooting game written in CoffeeScript.
