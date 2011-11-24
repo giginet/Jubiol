@@ -15,5 +15,5 @@ task 'compile', 'compile and minify JUBIOL.', (options) ->
     exec "coffee -c #{FILENAME}.js #{FILES[0]}", outputErr
   else
     exec "coffee -cj #{FILENAME} #{FILES.join ' '}", outputErr 
-  exec "yuicompressor #{FILENAME}.js > #{FILENAME}.js", outputErr
+  exec "yuicompressor #{FILENAME}.js > #{FILENAME}.min.js", outputErr
 
