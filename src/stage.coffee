@@ -7,6 +7,7 @@ class Stage extends Group
     @total = 0
     @checkTimer = new Timer(45)
     @gameover = false
+    @changeLevel 1
   start : ->
     @bullets = new Group()
     @addChild @bullets
@@ -57,3 +58,8 @@ class Stage extends Group
       label.scaleX = 5
       label.scaleY = 5
       Jubiol.game.currentScene.addChild label
+  changeLevel : (level) ->
+    @level = level
+    label = new Label "Level #{level}"
+    label.y = 500
+    @addChild label
