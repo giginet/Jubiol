@@ -10,12 +10,22 @@ class Character extends Sprite
     @y += @v.y
   setImage : (fileName) ->
     @image = Jubiol.game.assets["#{Jubiol.config.IMAGE_PATH}#{fileName}"]
+  setOpacity : (opacity) ->
+    w = @image.width
+    h = @image.height
+    console.log "opacity"
+    for x in [0...w]
+      for y in [0...h]
+        console.log @image.getPixel()
+        pixel = @image.getPixel()
+        @image.setPixel(x, y, pixel[0], pixel[1], pixel[2], opacity)
 
-class Miku extends Character
+class Player extends Character
   constructor: (x=0, y=0) ->
     super 42, 32, x, y
     @setImage 'miku.gif'
-    @speed =7
+    @speed = 7
+    @pressA = false
   update : (e) ->
     @v.set 0, 0
     if Jubiol.game.input.left
@@ -36,3 +46,11 @@ class Miku extends Character
       @y = Jubiol.config.HEIGHT - @height
     else if @y < 0
       @y = 0
+    if Jubiol.game.input.a
+      if !@pressA
+        Jubiol.game.stage.count += 1
+        @setOpacity 0.5
+        @pressA = true
+        console.log Jubiol.game.stage.count
+    else
+      @pressA = false
