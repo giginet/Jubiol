@@ -6,7 +6,10 @@ class Jubiol
     FPS : 30,
     IMAGE_PATH : 'resources/images/',
     IMAGES : [
-      'miku.gif'
+      'miku.gif',
+      'bullet.png',
+      'bullet1.png',
+      'font.png'
     ],
     SOUND_PATH : 'resources/sounds/',
     SOUNDS : [

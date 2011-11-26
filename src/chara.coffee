@@ -48,9 +48,24 @@ class Player extends Character
       @y = 0
     if Jubiol.game.input.a
       if !@pressA
-        Jubiol.game.stage.count += 1
-        @setOpacity 0.5
+        ++Jubiol.game.stage.count
         @pressA = true
         console.log Jubiol.game.stage.count
     else
       @pressA = false
+
+class Bullet extends Character
+  constructor : (x=0, y=0) ->
+    super 12, 12, x, y
+    rand = Math.random() * 100
+    if rand < 5
+      @setImage "bullet1.png"
+      @red = true
+    else
+      @setImage "bullet.png"
+      @red = false
+  update : (e) ->
+    @v.y = 10
+    super
+    if @x < 0 or @x > Jubiol.config.WIDTH or @y < 0 or @y > Jubiol.config.HEIGHT
+      Jubiol.game.stage.bullets.removeChild @
