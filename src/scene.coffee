@@ -21,19 +21,41 @@ class LogoScene extends Scene
       @kawaz.opacity -= 1.0/60
 
 class TitleScene extends Scene
-  false
+  constructor : ->
+    super
+    @label = new Label "Jubiol"
+    @label.font = "96px #{Jubiol.config.FONT}"
+    @label.color = "#222"
+    @label.x = 185
+    @label.y = -50
+    @addEventListener 'enterframe', @update
+    @addChild @label
+  update : ->
+    unless @label.y >= 70
+      @label.y += 3
+    else if @label.y is 70
+      play = new Label "Play"
+      kawaz = new Label "Kawaz"
+      play.x = 295
+      play.y = 270
+      play.font = "36px #{Jubiol.config.FONT}"
+      kawaz.x = 280
+      kawaz.y = 340
+      kawaz.font = "36px #{Jubiol.config.FONT}"
+      @addChild play
+      @addChild kawaz
 
 class MainScene extends Scene
   constructor : ->
     super
-    @timer = new Timer(600)
+    @timer = new Timer 600
     @setup()
   setup : ->
     @stage = new Stage()
     Jubiol.game.stage = @stage
     @addChild @stage
     @addEventListener 'enterframe', @update
-    @label = new Label('')
+    @label = new Label ''
     @timer.play()
   update : (e) ->
     @timer.tick()

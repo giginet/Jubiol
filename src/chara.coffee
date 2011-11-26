@@ -16,7 +16,6 @@ class Player extends KawazSprite
     super 42, 32, x, y
     @setImage 'miku.gif'
     @speed = 7
-    @pressA = false
     @invincibleTimer = new Timer(45)
     @invincibleTimer.setComplete ->
       @stop()
