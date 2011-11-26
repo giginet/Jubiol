@@ -6,35 +6,49 @@ class Stage extends Group
     @count = 0
     @total = 0
     @checkTimer = new Timer(45)
+    @gameover = false
   start : ->
     @bullets = new Group()
     @addChild @bullets
     @addEventListener 'enterframe', @update
+    @pressA = false
   update : (e) ->
+    return if @gameover
     @checkTimer.tick()
     if not @checkTimer.isActive()
       @popEnemy()
       @player.update()
       for bullet in @bullets.childNodes.clone()
         bullet.update()
-        if @player.within(bullet, 10)
+        if not @player.invincibleTimer.isActive() and @player.within(bullet, 10)
           @checkTimer.play()
           break
     else if @checkTimer.isOver()
       @checkDeath()
+    if Jubiol.game.input.a
+      if !@pressA
+        ++Jubiol.game.stage.count
+        @pressA = true
+        console.log Jubiol.game.stage.count
+    else
+      @pressA = false
+
   popEnemy : ->
     bullet = new Bullet(Math.random() * Jubiol.config.WIDTH, 0)
     if bullet.red
       ++Jubiol.game.stage.total
     @bullets.addChild bullet
   checkDeath : ->
+    @gameover = true
     rate = Math.abs(@total-@count)/@total
     console.log "#{@count} #{@total} #{rate}"
     if rate < 0.05
       console.log "OK"
+      @player.invincibleTimer.play()
       @checkTimer.stop()
     else
       console.log "NG"
+      @parentNode.removeEventListener 'enterframe'
       label = new Label("Game Over")
       label.x = 150
       label.y = 200

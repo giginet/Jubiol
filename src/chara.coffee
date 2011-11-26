@@ -17,7 +17,12 @@ class Player extends KawazSprite
     @setImage 'miku.gif'
     @speed = 7
     @pressA = false
+    @invincibleTimer = new Timer(45)
+    @invincibleTimer.setComplete ->
+      @stop()
   update : (e) ->
+    @invincibleTimer.tick()
+    @opacity = 0.5 + 0.5 * Math.cos(@invincibleTimer.now() * 30 * Math.PI / 180)
     @v.set 0, 0
     if Jubiol.game.input.left
       @v.x = -1
@@ -37,13 +42,6 @@ class Player extends KawazSprite
       @y = Jubiol.config.HEIGHT - @height
     else if @y < 0
       @y = 0
-    if Jubiol.game.input.a
-      if !@pressA
-        ++Jubiol.game.stage.count
-        @pressA = true
-        console.log Jubiol.game.stage.count
-    else
-      @pressA = false
 
 class Bullet extends KawazSprite
   constructor : (x=0, y=0) ->
