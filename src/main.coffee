@@ -4,6 +4,7 @@ class Jubiol
     WIDTH : 640,
     HEIGHT : 480,
     FPS : 30,
+    FONT : 'Osaka',
     IMAGE_PATH : 'resources/images/',
     IMAGES : [
       'miku.gif',
@@ -30,9 +31,6 @@ class Jubiol
     @game.onload = ->
       root.setup()
       @pushScene root
-    #   @stage = new Stage()
-    #   Jubiol.game.stage = @stage
-    #   @currentScene.addChild @stage
     @game.start()
 
 window.onload = ->
