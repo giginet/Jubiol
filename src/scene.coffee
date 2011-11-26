@@ -1,7 +1,6 @@
 class LogoScene extends Scene
   setup : ->
       @kawaz = new KawazSprite(253, 81)
-      console.log "init"
       @kawaz.setImage 'kawaz.png'
       @kawaz.x = 193.5
       @kawaz.y = 220
@@ -34,7 +33,7 @@ class MainScene extends Scene
     Jubiol.game.stage = @stage
     @addChild @stage
     @addEventListener 'enterframe', @update
-    @label = new Label('AAAAA')
+    @label = new Label('')
     @timer.play()
   update : (e) ->
     @timer.tick()
@@ -52,4 +51,3 @@ class MainScene extends Scene
       @label.y -= 30
       if @label.y < -100
         @removeChild @label
-

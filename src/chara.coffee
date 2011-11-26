@@ -1,7 +1,7 @@
 class KawazSprite extends Sprite
   constructor: (w, h, x=0, y=0) ->
     super w, h
-    @addEventListener 'enterframe', @update
+    @removeEventListener 'enterframe'
     @x = x
     @y = y
     @v = new Vector()
@@ -10,15 +10,6 @@ class KawazSprite extends Sprite
     @y += @v.y
   setImage : (fileName) ->
     @image = Jubiol.game.assets["#{Jubiol.config.IMAGE_PATH}#{fileName}"]
-  setOpacity : (opacity) ->
-    w = @image.width
-    h = @image.height
-    console.log "opacity"
-    for x in [0...w]
-      for y in [0...h]
-        console.log @image.getPixel()
-        pixel = @image.getPixel()
-        @image.setPixel(x, y, pixel[0], pixel[1], pixel[2], opacity)
 
 class Player extends KawazSprite
   constructor: (x=0, y=0) ->
