@@ -39,7 +39,6 @@ class Stage extends Group
       ++Jubiol.game.stage.total
     @bullets.addChild bullet
   checkDeath : ->
-    @gameover = true
     rate = Math.abs(@total-@count)/@total
     console.log "#{@count} #{@total} #{rate}"
     if rate < 0.05
@@ -49,6 +48,7 @@ class Stage extends Group
     else
       console.log "NG"
       @parentNode.removeEventListener 'enterframe'
+      @gameover = true
       label = new Label("Game Over")
       label.x = 150
       label.y = 200
