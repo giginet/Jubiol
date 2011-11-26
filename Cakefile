@@ -8,7 +8,8 @@ FILES = [
   'kwing/lib/timer.coffee',
   'src/main.coffee',
   'src/stage.coffee',
-  'src/chara.coffee'
+  'src/chara.coffee',
+  'src/scene.coffee'
 ]
 HTMLFILE = 'index.html'
 

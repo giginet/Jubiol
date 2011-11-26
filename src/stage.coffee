@@ -32,5 +32,4 @@ class Stage extends Group
       label.font = "64px Osaka"
       label.scaleX = 5
       label.scaleY = 5
-      @addChild label
-
+      Jubiol.game.currentScene.addChild label

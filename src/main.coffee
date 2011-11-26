@@ -9,7 +9,8 @@ class Jubiol
       'miku.gif',
       'bullet.png',
       'bullet1.png',
-      'font.png'
+      'font.png',
+      'kawaz.png'
     ],
     SOUND_PATH : 'resources/sounds/',
     SOUNDS : [
@@ -19,16 +20,20 @@ class Jubiol
     @game = new Game @config.WIDTH, @config.HEIGHT
     @game.fps = @config.FPS
     @game.keybind(90, 'a')
+    Jubiol.game = @game
+    Jubiol.config = @config
     for image in @config.IMAGES
       @game.preload("#{@config.IMAGE_PATH}#{image}")
 
+    root = new LogoScene()
+
     @game.onload = ->
-      @stage = new Stage()
-      Jubiol.game.stage = @stage
-      @rootScene.addChild @stage
+      root.setup()
+      @pushScene root
+    #   @stage = new Stage()
+    #   Jubiol.game.stage = @stage
+    #   @currentScene.addChild @stage
     @game.start()
-    Jubiol.game = @game
-    Jubiol.config = @config
 
 window.onload = ->
   new Jubiol()

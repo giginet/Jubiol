@@ -1,4 +1,4 @@
-class Character extends Sprite
+class KawazSprite extends Sprite
   constructor: (w, h, x=0, y=0) ->
     super w, h
     @addEventListener 'enterframe', @update
@@ -20,7 +20,7 @@ class Character extends Sprite
         pixel = @image.getPixel()
         @image.setPixel(x, y, pixel[0], pixel[1], pixel[2], opacity)
 
-class Player extends Character
+class Player extends KawazSprite
   constructor: (x=0, y=0) ->
     super 42, 32, x, y
     @setImage 'miku.gif'
@@ -54,7 +54,7 @@ class Player extends Character
     else
       @pressA = false
 
-class Bullet extends Character
+class Bullet extends KawazSprite
   constructor : (x=0, y=0) ->
     super 12, 12, x, y
     rand = Math.random() * 100
