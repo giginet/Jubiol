@@ -6,8 +6,13 @@ class Level
     @
   teardown : ->
     @
-  update : ->
-    @
+  getBullet : ->
+    bullet = new Bullet(Math.random() * Jubiol.config.WIDTH, 0)
+  popEnemy : (bullets) ->
+    bullet = @getBullet()
+    if bullet.red
+      ++Jubiol.game.stage.total
+    bullets.addChild bullet
   isClear : ->
     false
 

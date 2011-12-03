@@ -22,6 +22,7 @@ class Jubiol
     @game = new Game @config.WIDTH, @config.HEIGHT
     @game.fps = @config.FPS
     @game.keybind(90, 'a')
+    @game.keybind(88, 'b')
     Jubiol.game = @game
     Jubiol.config = @config
     for image in @config.IMAGES

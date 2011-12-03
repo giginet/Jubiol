@@ -3,7 +3,7 @@ class StateManager
     @stack = []
     @pushState rootState
   pushState : (state) ->
-    state.setup()
+    state?.setup()
     @stack.push state
   popState : ->
     state = @stack.pop()
@@ -84,19 +84,32 @@ class CheckState extends State
       console.log "OK"
       @scene.stage.player.invincibleTimer.play()
       return false
-      # @checkTimer.stop()
     else
       console.log "NG"
       return new GameOverState()
 
 class GameOverState extends State
   setup : ->
-    @gameover = new Label("Game Over")
-    @gameover.x = 150
-    @gameover.y = 200
-    @gameover.width = 500
-    @gameover.font = "64px #{Jubiol.config.FONT}"
-    @gameover.scaleX = 5
-    @gameover.scaleY = 5
-    @scene.addChild @gameover
+    gameover = new Label("Game Over")
+    gameover.x = 150
+    gameover.y = 200
+    gameover.width = 500
+    gameover.scaleX = 5
+    gameover.scaleY = 5
+    replay = new Label("Replay(z)")
+    title = new Label("Title(x)")
+    replay.x = 180
+    replay.y = 300
+    title.x = 350
+    title.y = 300
+    for label in [replay, title, gameover]
+      label.font = "32px #{Jubiol.config.FONT}"
+      @scene.addChild label
+    gameover.font = "64px #{Jubiol.config.FONT}"
+  update : ->
+    if Jubiol.game.input.a
+      Jubiol.game.replaceScene(new MainScene())
+    else if Jubiol.game.input.b
+      Jubiol.game.replaceScene(new TitleScene())
+    return true
 

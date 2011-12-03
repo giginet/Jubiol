@@ -6,18 +6,13 @@ class Stage extends Group
     @bullets = new Group()
     @addChild @bullets
   update : (e) ->
-    @popEnemy()
+    @level?.popEnemy(@bullets)
     @player.update()
     for bullet in @bullets.childNodes.clone()
       bullet.update()
       if not @player.invincibleTimer.isActive() and @player.within(bullet, 10)
         return true
     return false
-  popEnemy : ->
-    bullet = new Bullet(Math.random() * Jubiol.config.WIDTH, 0)
-    if bullet.red
-      ++Jubiol.game.stage.total
-    @bullets.addChild bullet
   changeLevel : (lv) ->
     levelClass = eval("Level#{lv}")
     @level = new levelClass(@)

@@ -54,6 +54,8 @@ class MainScene extends Scene
     @addChild @stage
     @counter = new Counter()
     @addEventListener 'enterframe', @update
+    @addEventListener 'exit', ->
+      @removeEventListener 'enterframe'
   update : (e) ->
     state = @stateManager.currentState().update()
     if state is false
