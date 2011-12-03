@@ -1,13 +1,13 @@
 class Level
   level : 0
-  constructor : (stage) ->
-    @stage = stage
+  constructor : (@stage) ->
+    @
   setup : ->
-    ""
+    @
   teardown : ->
-    ""
+    @
   update : ->
-    ""
+    @
   isClear : ->
     false
 

@@ -16,6 +16,7 @@ class Jubiol
     SOUND_PATH : 'resources/sounds/',
     SOUNDS : [
     ],
+    INITIAL_LEVEL : 1
   }
   constructor : ->
     @game = new Game @config.WIDTH, @config.HEIGHT

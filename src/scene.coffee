@@ -48,28 +48,15 @@ class TitleScene extends Scene
 class MainScene extends Scene
   constructor : ->
     super
-    @timer = new Timer 600
-    @setup()
-  setup : ->
+    @stateManager = new StateManager(new ReadyState(@))
     @stage = new Stage()
     Jubiol.game.stage = @stage
     @addChild @stage
+    @counter = new Counter()
     @addEventListener 'enterframe', @update
-    @label = new Label ''
-    @timer.play()
   update : (e) ->
-    @timer.tick()
-    if @timer.now() is 30
-      @label.text = 'Ready'
-      @label.x = 220
-      @label.y = 200
-      @label.font = "64px #{Jubiol.config.FONT}"
-      @addChild @label
-    else if @timer.now() is 60
-      @label.text = "GO!"
-      @label.x = 250
-      @stage.start()
-    else if 60 < @timer.now() < 120
-      @label.y -= 30
-      if @label.y < -100
-        @removeChild @label
+    state = @stateManager.currentState().update()
+    if state is false
+      @stateManager.popState()
+    else if state isnt true
+      @stateManager.pushState state
