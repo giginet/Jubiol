@@ -41,6 +41,7 @@ class Counter
     else
       @pressA = false
   calcRate : ->
+    console.log "#{@total}, #{@count}"
     if @total
       return Math.abs(@total-@count)/@total
     return 1

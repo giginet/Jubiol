@@ -5,17 +5,19 @@ class KawazSprite extends Sprite
     @x = x
     @y = y
     @v = new Vector()
+    @speed = 7
   update : (e) ->
     @x += @v.x
     @y += @v.y
   setImage : (fileName) ->
     @image = Jubiol.game.assets["#{Jubiol.config.IMAGE_PATH}#{fileName}"]
+  position : ->
+    return new Vector(@x, @y)
 
 class Player extends KawazSprite
   constructor: (x=0, y=0) ->
     super 42, 32, x, y
     @setImage 'miku.gif'
-    @speed = 7
     @invincibleTimer = new Timer(45)
     @invincibleTimer.setComplete ->
       @stop()
@@ -31,7 +33,7 @@ class Player extends KawazSprite
       @v.y = -1
     else if Jubiol.game.input.down
       @v.y = 1
-    @v.truncate @speed
+    @v.resize @speed
     super
     if @x > Jubiol.config.WIDTH - @width
       @x = Jubiol.config.WIDTH - @width
@@ -43,17 +45,14 @@ class Player extends KawazSprite
       @y = 0
 
 class Bullet extends KawazSprite
-  constructor : (x=0, y=0) ->
+  constructor : (x=0, y=0, @red=false) ->
     super 12, 12, x, y
-    rand = Math.random() * 100
-    if rand < 5
+    if @red
       @setImage "bullet1.png"
-      @red = true
     else
       @setImage "bullet.png"
-      @red = false
-  update : (e) ->
     @v.y = 10
+  update : (e) ->
     super
     if @x < 0 or @x > Jubiol.config.WIDTH or @y < 0 or @y > Jubiol.config.HEIGHT
       Jubiol.game.stage.bullets.removeChild @
