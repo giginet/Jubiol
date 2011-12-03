@@ -7,13 +7,15 @@ FILES = [
   'kwing/lib/array.coffee',
   'kwing/lib/timer.coffee',
   'src/main.coffee',
+  'src/state.coffee',
+  'src/level.coffee',
   'src/stage.coffee',
   'src/chara.coffee',
   'src/scene.coffee'
 ]
 HTMLFILE = 'index.html'
 
-task 'compile', 'compile and minify JUBIOL.', (options) ->
+task 'compile', 'compile and minify Jubiol.', (options) ->
   outputErr = (err, stdout, stderr) ->
     throw err if err
     if stdout or stderr

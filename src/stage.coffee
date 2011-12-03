@@ -7,12 +7,12 @@ class Stage extends Group
     @total = 0
     @checkTimer = new Timer(45)
     @gameover = false
-    @changeLevel 1
   start : ->
     @bullets = new Group()
     @addChild @bullets
     @addEventListener 'enterframe', @update
     @pressA = false
+    @changeLevel 1
   update : (e) ->
     return if @gameover
     @checkTimer.tick()
@@ -26,6 +26,7 @@ class Stage extends Group
           break
     else if @checkTimer.isOver()
       @checkDeath()
+  count : ->
     if Jubiol.game.input.a
       if !@pressA
         ++Jubiol.game.stage.count
@@ -33,7 +34,6 @@ class Stage extends Group
         console.log Jubiol.game.stage.count
     else
       @pressA = false
-
   popEnemy : ->
     bullet = new Bullet(Math.random() * Jubiol.config.WIDTH, 0)
     if bullet.red
@@ -58,8 +58,16 @@ class Stage extends Group
       label.scaleX = 5
       label.scaleY = 5
       Jubiol.game.currentScene.addChild label
-  changeLevel : (level) ->
-    @level = level
-    label = new Label "Level #{level}"
-    label.y = 500
+  changeLevel : (lv) ->
+    levelClass = eval("Level#{lv}")
+    @level = new levelClass(@)
+    label = new Label "Level #{lv}"
+    label.font = "32px #{Jubiol.config.FONT}"
+    label.x = -50
+    label.y = 440
+    label.addEventListener 'enterframe', ->
+      @x += 20
+      if @x > Jubiol.config.WIDTH
+        @parentNode.removeChild @
+    console.log "new Level"
     @addChild label

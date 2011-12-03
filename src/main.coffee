@@ -4,7 +4,7 @@ class Jubiol
     WIDTH : 640,
     HEIGHT : 480,
     FPS : 30,
-    FONT : 'Osaka',
+    FONT : 'Helvetica',
     IMAGE_PATH : 'resources/images/',
     IMAGES : [
       'miku.gif',
