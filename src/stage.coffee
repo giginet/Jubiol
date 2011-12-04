@@ -9,6 +9,9 @@ class Stage extends Group
     @level?.popEnemy(@bullets)
     @level?.update()
     @player.update()
+    @levelTimer?.tick()
+    if @levelTimer?.isOver()
+      @changeLevel @level.level + 1
     for bullet in @bullets.childNodes.clone()
       bullet.update()
       if not @player.invincibleTimer.isActive() and @player.within(bullet, 10)
@@ -26,6 +29,11 @@ class Stage extends Group
       if @x > Jubiol.config.WIDTH
         @parentNode.removeChild @
     @addChild label
+    @levelTimer = new Timer(Jubiol.config.FPS * 30)
+    @levelTimer.play()
+    for bullet in @bullets.childNodes
+      if bullet.v.isZero()
+        bullet.v = Jubiol.game.stage.player.center().sub(center).resize(bullet.speed)
 
 class Counter
   constructor : ->

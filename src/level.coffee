@@ -33,7 +33,7 @@ class Level2 extends Level
   level : 2
   getBullet : (red) ->
     bullet = super
-    bullet.v = @stage.player.position().sub(bullet.position()).resize(bullet.speed)
+    bullet.v = @stage.player.center().sub(bullet.center()).resize(bullet.speed)
     return bullet
 
 class Level3 extends Level
@@ -42,7 +42,7 @@ class Level3 extends Level
     bullet = super
     player = @stage.player
     bullet.addEventListener 'enterframe', ->
-      @v = player.position().sub(@position()).resize(@speed)
+      @v = player.center().sub(@center()).resize(@speed)
       @v.x *= 0.2
       @v.y = 3
       @update
@@ -114,12 +114,42 @@ class Level6 extends Level
   level : 6
   constructor : (@stage) ->
     super
+    @centerPoint = new Vector(Jubiol.config.WIDTH / 2, Jubiol.config.HEIGHT / 2)
     @bullets = []
+    @v = new Vector(0, 10)
   getBullet : (red) ->
     bullet = super
-    bullet.x = Jubiol.config.WIDTH / 2
-    bullet.y = 100
+    vector = @centerPoint.clone().add(@v.rotate(15))
+    bullet.x = vector.x
+    bullet.y = vector.y
+    bullet.v = @v.clone().resize(bullet.speed / 5)
     @bullets.push bullet
     return bullet
   update : () ->
-    @
+    vector = Jubiol.game.stage.player.center().sub(@centerPoint).normalize()
+    @centerPoint.add(vector)
+
+class Level7 extends Level
+  level : 7
+  constructor : (@stage) ->
+    super
+    @bullets = []
+  getBullet : (red) ->
+    bullet = super
+    center = new Vector(Jubiol.config.WIDTH / 2, Jubiol.config.HEIGHT / 2)
+    vector = Jubiol.game.stage.player.center().sub(center).resize(30)
+    bullet.x = center.x
+    bullet.y = center.y
+    bullet.v = vector
+    @bullets.push bullet
+    return bullet
+  update : ->
+    for bullet in @bullets
+      if not bullet?.flag
+        bullet.v.scale(0.9)
+        if bullet.v.length() < 1
+          bullet.v = new Vector(0.5, 0)
+          bullet.v.rotate(Math.random() * 360)
+          bullet.flag = true
+    if Math.random() * 30 is 0
+      @redRate += 0.01
