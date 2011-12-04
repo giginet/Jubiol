@@ -7,6 +7,7 @@ class Stage extends Group
     @addChild @bullets
   update : (e) ->
     @level?.popEnemy(@bullets)
+    @level?.update()
     @player.update()
     for bullet in @bullets.childNodes.clone()
       bullet.update()
@@ -24,7 +25,6 @@ class Stage extends Group
       @x += 20
       if @x > Jubiol.config.WIDTH
         @parentNode.removeChild @
-    console.log "new Level"
     @addChild label
 
 class Counter

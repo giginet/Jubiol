@@ -2,7 +2,7 @@ class Level
   level : 0
   constructor : (@stage) ->
     @popRate = @level * 0.08
-    @redRate = @level * 0.03
+    @redRate = 0.05 + @level * 0.01
   isPop : ->
     return Math.random() < @popRate
   setup : ->
@@ -15,14 +15,19 @@ class Level
     return if not @isPop()
     red = Math.random() < @redRate
     bullet = @getBullet(red)
-    if bullet.red
-      ++Jubiol.game.currentScene.counter.total
     bullets.addChild bullet
   isClear : ->
     false
+  update : ->
+    @
 
 class Level1 extends Level
   level : 1
+  getBullet : (red) ->
+    bullet = new Bullet(100 + Math.random() * (Jubiol.config.WIDTH - 132), 0, red)
+    angle = -15 + Math.random() * 30
+    bullet.v.rotate(angle)
+    return bullet
 
 class Level2 extends Level
   level : 2
@@ -85,10 +90,10 @@ class Level5 extends Level
     @stars = []
   isPop : ->
     ++@popCount
-    @popCount %= 3
+    @popCount %= 2
     return @popCount is 0
   popEnemy : (bullets) ->
-    red = Math.random() < @redRate
+    return if not @isPop()
     if @stars.isEmpty() or @stars.last().isComplete?()
       x = Math.random() * (Jubiol.config.WIDTH - 400) + 200
       y = Math.random() * (Jubiol.config.HEIGHT - 400) + 200
@@ -97,7 +102,24 @@ class Level5 extends Level
       star = new Star(x, y, max, distance)
       @stars.push star
     for star in @stars
-      continue if not star.isComplete() and not @isPop()
-      bullet = star.update(red)
-      if bullet isnt false
+      red = Math.random() < @redRate
+      bullet = star.pop(red)
+      if bullet
         bullets.addChild bullet
+  update : () ->
+    for star in @stars
+      star.update()
+
+class Level6 extends Level
+  level : 6
+  constructor : (@stage) ->
+    super
+    @bullets = []
+  getBullet : (red) ->
+    bullet = super
+    bullet.x = Jubiol.config.WIDTH / 2
+    bullet.y = 100
+    @bullets.push bullet
+    return bullet
+  update : () ->
+    @

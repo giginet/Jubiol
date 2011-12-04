@@ -57,7 +57,7 @@ class Bullet extends KawazSprite
     @v.y = 10
   update : (e) ->
     super
-    if @x < -50 or @x > Jubiol.config.WIDTH + 50 or @y -50 < 0 or @y > Jubiol.config.HEIGHT + 50
+    if @x < -100 or @x > Jubiol.config.WIDTH + 100 or @y < -100 or @y > Jubiol.config.HEIGHT + 100
       Jubiol.game.stage.bullets.removeChild @
 
 class Star
@@ -70,7 +70,7 @@ class Star
     @centerPoint = rootPoint.clone().add(new Vector(radius, - radius * Math.tan(Math.PI / 10)))
     @currentPoint = rootPoint.clone()
     @bullets = []
-  update : (red) ->
+  pop : (red) ->
     unless @isComplete()
       vector = @currentPoint.add(@direction).clone()
       bullet = new Bullet(vector.x, vector.y, red)
@@ -81,7 +81,9 @@ class Star
         @direction.rotate(144)
         ++@rotateCount
       return bullet
-    else
+    return false
+  update : ->
+    if @isComplete()
       if not @v?
         @v = Jubiol.game.stage.player.position().sub(@centerPoint).resize(7)
       @centerPoint.add(@v)
@@ -89,7 +91,5 @@ class Star
         sub = bullet.center().sub(@centerPoint)
         rotated = sub.clone().rotate(5)
         bullet.v = @v.clone().add(rotated.sub(sub))
-      @
-    return false
   isComplete : () ->
     return @rotateCount >= 5

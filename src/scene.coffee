@@ -26,14 +26,14 @@ class TitleScene extends Scene
     @label = new Label "Jubiol"
     @label.font = "96px #{Jubiol.config.FONT}"
     @label.color = "#222"
-    @label.x = 185
+    @label.x = 195
     @label.y = -50
     @addEventListener 'enterframe', @update
     @addChild @label
   update : ->
-    unless @label.y >= 70
+    unless @label.y >= 82
       @label.y += 3
-    else if @label.y is 70
+    else if @label.y is 82
       play = new Label "Play"
       kawaz = new Label "Kawaz"
       play.x = 295
