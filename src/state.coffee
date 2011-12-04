@@ -49,7 +49,7 @@ class MainState extends State
   constructor : ->
     super
     @stage = @scene.stage
-    @stage.changeLevel 1
+    @stage.changeLevel Jubiol.config.INITIAL_LEVEL
   setup : ->
     label = new Label ''
     label.text = 'Go'
@@ -64,8 +64,9 @@ class MainState extends State
 
   update : ->
     @scene.counter.update()
-    if @scene.stage.update()
-      return new CheckState()
+    state = @scene.stage.update()
+    if state
+      return state
     return true
 
 class CheckState extends State
@@ -112,4 +113,31 @@ class GameOverState extends State
     else if Jubiol.game.input.b
       Jubiol.game.replaceScene(new TitleScene())
     return true
+
+class ClearState extends State
+  setup : ->
+    clear = new Label("Clear!")
+    clear.x = 230
+    clear.y = 200
+    clear.width = 500
+    clear.scaleX = 5
+    clear.scaleY = 5
+    replay = new Label("Replay(z)")
+    title = new Label("Title(x)")
+    replay.x = 180
+    replay.y = 300
+    title.x = 350
+    title.y = 300
+    for label in [replay, title, clear]
+      label.font = "32px #{Jubiol.config.FONT}"
+      @scene.addChild label
+    clear.font = "64px #{Jubiol.config.FONT}"
+  update : ->
+    if Jubiol.game.input.a
+      Jubiol.game.replaceScene(new MainScene())
+    else if Jubiol.game.input.b
+      Jubiol.game.replaceScene(new TitleScene())
+    return true
+
+
 

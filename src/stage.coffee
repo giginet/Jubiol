@@ -11,13 +11,16 @@ class Stage extends Group
     @player.update()
     @levelTimer?.tick()
     if @levelTimer?.isOver()
+      if @level.level is Jubiol.config.LAST_LEVEL
+        return new ClearState()
       @changeLevel @level.level + 1
     for bullet in @bullets.childNodes.clone()
       bullet.update()
       if not @player.invincibleTimer.isActive() and @player.within(bullet, 10)
-        return true
+        return new CheckState()
     return false
   changeLevel : (lv) ->
+    return if lv > Jubiol.config.LAST_LEVEL
     levelClass = eval("Level#{lv}")
     @level = new levelClass(@)
     label = new Label "Level #{lv}"
@@ -29,11 +32,11 @@ class Stage extends Group
       if @x > Jubiol.config.WIDTH
         @parentNode.removeChild @
     @addChild label
-    @levelTimer = new Timer(Jubiol.config.FPS * 30)
+    @levelTimer = new Timer(Jubiol.config.FPS * Jubiol.config.LEVEL_TIME)
     @levelTimer.play()
     for bullet in @bullets.childNodes
       if bullet.v.isZero()
-        bullet.v = Jubiol.game.stage.player.center().sub(center).resize(bullet.speed)
+        bullet.v = Jubiol.game.stage.player.center().sub(bullet.position()).resize(bullet.speed)
 
 class Counter
   constructor : ->

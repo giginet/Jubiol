@@ -16,7 +16,9 @@ class Jubiol
     SOUND_PATH : 'resources/sounds/',
     SOUNDS : [
     ],
-    INITIAL_LEVEL : 1
+    INITIAL_LEVEL : 1,
+    LAST_LEVEL : 7,
+    LEVEL_TIME : 30
   }
   constructor : ->
     @game = new Game @config.WIDTH, @config.HEIGHT
@@ -27,9 +29,7 @@ class Jubiol
     Jubiol.config = @config
     for image in @config.IMAGES
       @game.preload("#{@config.IMAGE_PATH}#{image}")
-
     root = new LogoScene()
-
     @game.onload = ->
       root.setup()
       @pushScene root
