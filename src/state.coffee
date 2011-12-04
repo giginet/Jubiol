@@ -102,10 +102,13 @@ class GameOverState extends State
     replay = new Label("Replay(z)")
     title = new Label("Title(x)")
     replay.x = 180
-    replay.y = 300
+    replay.y = 400
     title.x = 350
-    title.y = 300
-    for label in [replay, title, gameover]
+    title.y = 400
+    score = new Label("#{@scene.counter.calcScore()} Point")
+    score.x = 220
+    score.y = 300
+    for label in [replay, title, gameover, score]
       label.font = "32px #{Jubiol.config.FONT}"
       @scene.addChild label
     gameover.font = "64px #{Jubiol.config.FONT}"
@@ -128,11 +131,14 @@ class ClearState extends State
     clear.scaleY = 5
     replay = new Label("Replay(z)")
     title = new Label("Title(x)")
+    score = new Label("#{@scene.counter.calcScore()} Point")
     replay.x = 180
     replay.y = 300
     title.x = 350
     title.y = 300
-    for label in [replay, title, clear]
+    score.x = 220
+    score.y = 300
+    for label in [replay, title, clear, score]
       label.font = "32px #{Jubiol.config.FONT}"
       @scene.addChild label
     clear.font = "64px #{Jubiol.config.FONT}"

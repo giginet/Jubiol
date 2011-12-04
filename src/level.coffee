@@ -2,7 +2,7 @@ class Level
   level : 0
   constructor : (@stage) ->
     @popRate = @level * 0.08
-    @redRate = 0.05 + @level * 0.01
+    @redRate = 0.10 + @level * 0.01
   isPop : ->
     return Math.random() < @popRate
   setup : ->

@@ -75,5 +75,6 @@ class Counter
     return 1
   calcScore : ->
     base = Jubiol.game.stage.level.level * 1000
-    score = base + @total * 100 - 200 * @calcRate()
+    score = Math.round(base + @total * 100 - 200 * @calcRate())
+    score = 0 if score < 0
     return score
