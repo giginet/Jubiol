@@ -141,15 +141,16 @@ class Level7 extends Level
     bullet.x = center.x
     bullet.y = center.y
     bullet.v = vector
+    bullet.addEventListener 'enterframe', ->
+      if not @?.flag
+        @v.scale(0.9)
+        if @v.length() < 1
+          @v = new Vector(0.5, 0)
+          @v.rotate(Math.random() * 360)
+          @flag = true
+
     @bullets.push bullet
     return bullet
   update : ->
-    for bullet in @bullets
-      if not bullet?.flag
-        bullet.v.scale(0.9)
-        if bullet.v.length() < 1
-          bullet.v = new Vector(0.5, 0)
-          bullet.v.rotate(Math.random() * 360)
-          bullet.flag = true
     if Math.floor(Math.random() * 60) is 0
       @redRate += 0.01

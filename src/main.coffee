@@ -1,5 +1,5 @@
 enchant()
-class Jubiol
+class Jubiol extends Game
   config : {
     WIDTH : 640,
     HEIGHT : 480,
@@ -24,26 +24,25 @@ class Jubiol
       'bomb.wav',
       'beep.wav',
     ],
-    INITIAL_LEVEL : 1,
+    INITIAL_LEVEL : 7,
     LAST_LEVEL : 7,
     LEVEL_TIME : 30
   }
   constructor : ->
-    @game = new Game @config.WIDTH, @config.HEIGHT
-    @game.fps = @config.FPS
-    @game.keybind(90, 'a')
-    @game.keybind(88, 'b')
-    Jubiol.game = @game
+    super @config.WIDTH, @config.HEIGHT
+    @.fps = @config.FPS
+    @.keybind(90, 'a')
+    @.keybind(88, 'b')
+    Jubiol.game = @
     Jubiol.config = @config
     for image in @config.IMAGES
-      @game.preload("#{@config.IMAGE_PATH}#{image}")
-    for sound in @config.SOUNDS
-      @game.preload("#{@config.SOUND_PATH}#{sound}")
+      @.preload("#{@config.IMAGE_PATH}#{image}")
+
     root = new LogoScene()
-    @game.onload = ->
+    @.onload = ->
       root.setup()
       @pushScene root
-    @game.start()
+    @.start()
 
 window.onload = ->
   new Jubiol()

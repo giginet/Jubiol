@@ -16,8 +16,6 @@ class StateManager
     return @stack.last()
 
 class State
-  """
-  """
   constructor : (@scene=Jubiol.game.currentScene) ->
     ""
   setup : ->
@@ -91,28 +89,34 @@ class CheckState extends State
       Sound.load("#{Jubiol.config.SOUND_PATH}beep.wav", 'audio/wav').play()
       return new GameOverState()
 
-class GameOverState extends State
+class GameEndState extends State
   setup : ->
-    gameover = new Label("Game Over")
-    gameover.x = 150
-    gameover.y = 200
-    gameover.width = 500
-    gameover.scaleX = 5
-    gameover.scaleY = 5
+    @timer = new Timer(60)
+    @timer.play()
     replay = new Label("Replay(z)")
     title = new Label("Title(x)")
     replay.x = 180
     replay.y = 400
     title.x = 350
     title.y = 400
-    score = new Label("#{@scene.counter.calcScore()} Point")
+    counter = @scene.counter
+    score = new Label("#{counter.calcScore()} Point")
     score.x = 220
     score.y = 300
-    for label in [replay, title, gameover, score]
+    scene = @scene
+    result = new Label("#{counter.count}/#{counter.total} #{Math.round(counter.calcRate() * 1000) / 10}%")
+    result.x = 220
+    result.y = 350
+    @timer.setComplete ->
+      scene.addChild title
+      scene.addChild replay
+    for label in [replay, title, score, result]
       label.font = "32px #{Jubiol.config.FONT}"
-      @scene.addChild label
-    gameover.font = "64px #{Jubiol.config.FONT}"
+    @scene.addChild score
+    @scene.addChild result
   update : ->
+    @timer.tick()
+    return true unless @timer.isOver()
     if Jubiol.game.input.a
       Sound.load("#{Jubiol.config.SOUND_PATH}decide.wav", 'audio/wav').play()
       Jubiol.game.replaceScene(new MainScene())
@@ -121,32 +125,27 @@ class GameOverState extends State
       Jubiol.game.replaceScene(new TitleScene())
     return true
 
-class ClearState extends State
+class GameOverState extends GameEndState
   setup : ->
+    super
+    gameover = new Label("Game Over")
+    gameover.x = 150
+    gameover.y = 200
+    gameover.width = 500
+    gameover.scaleX = 5
+    gameover.scaleY = 5
+    gameover.font = "64px #{Jubiol.config.FONT}"
+    @scene.addChild gameover
+
+class ClearState extends GameEndState
+  setup : ->
+    super
     clear = new Label("Clear!")
     clear.x = 230
     clear.y = 200
     clear.width = 500
     clear.scaleX = 5
     clear.scaleY = 5
-    replay = new Label("Replay(z)")
-    title = new Label("Title(x)")
-    score = new Label("#{@scene.counter.calcScore()} Point")
-    replay.x = 180
-    replay.y = 300
-    title.x = 350
-    title.y = 300
-    score.x = 220
-    score.y = 300
-    for label in [replay, title, clear, score]
-      label.font = "32px #{Jubiol.config.FONT}"
-      @scene.addChild label
     clear.font = "64px #{Jubiol.config.FONT}"
-  update : ->
-    if Jubiol.game.input.a
-      Sound.load("#{Jubiol.config.SOUND_PATH}decide.wav", 'audio/wav').play()
-      Jubiol.game.replaceScene(new MainScene())
-    else if Jubiol.game.input.b
-      Sound.load("#{Jubiol.config.SOUND_PATH}decide.wav", 'audio/wav').play()
-      Jubiol.game.replaceScene(new TitleScene())
-    return true
+    @scene.addChild clear
+

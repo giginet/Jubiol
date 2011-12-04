@@ -14,6 +14,7 @@ class Stage extends Group
       if @level.level is Jubiol.config.LAST_LEVEL
         return new ClearState()
       @changeLevel @level.level + 1
+      Sound.load("#{Jubiol.config.SOUND_PATH}levelup.wav", 'audio/wav').play()
     for bullet in @bullets.childNodes.clone()
       bullet.update()
       if @player.within(bullet, 10)
@@ -38,7 +39,6 @@ class Stage extends Group
     @addChild label
     @levelTimer = new Timer(Jubiol.config.FPS * Jubiol.config.LEVEL_TIME)
     @levelTimer.play()
-    Sound.load("#{Jubiol.config.SOUND_PATH}levelup.wav", 'audio/wav').play()
     for bullet in @bullets.childNodes
       if bullet.v.isZero()
         bullet.v = Jubiol.game.stage.player.center().sub(bullet.position()).resize(bullet.speed)
