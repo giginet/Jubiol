@@ -45,7 +45,7 @@ class Level3 extends Level
 
 class Level4 extends Level
   level : 4
-  constructor : ->
+  constructor : (@stage) ->
     super
     @max = 30
     @popCount = 0
@@ -76,3 +76,28 @@ class Level4 extends Level
     ++@count
     @count %= @max
     return bullet
+
+class Level5 extends Level
+  level : 5
+  constructor : (@stage) ->
+    super
+    @popCount = 0
+    @stars = []
+  isPop : ->
+    ++@popCount
+    @popCount %= 3
+    return @popCount is 0
+  popEnemy : (bullets) ->
+    red = Math.random() < @redRate
+    if @stars.isEmpty() or @stars.last().isComplete?()
+      x = Math.random() * (Jubiol.config.WIDTH - 400) + 200
+      y = Math.random() * (Jubiol.config.HEIGHT - 400) + 200
+      max = Math.floor(Math.random() * 8 + 4)
+      distance = Math.random() * 10 + 15
+      star = new Star(x, y, max, distance)
+      @stars.push star
+    for star in @stars
+      continue if not star.isComplete() and not @isPop()
+      bullet = star.update(red)
+      if bullet isnt false
+        bullets.addChild bullet

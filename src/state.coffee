@@ -49,7 +49,7 @@ class MainState extends State
   constructor : ->
     super
     @stage = @scene.stage
-    @stage.changeLevel 4
+    @stage.changeLevel 5
   setup : ->
     label = new Label ''
     label.text = 'Go'
