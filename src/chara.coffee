@@ -18,8 +18,8 @@ class KawazSprite extends Sprite
 
 class Player extends KawazSprite
   constructor: (x=0, y=0) ->
-    super 42, 32, x, y
-    @setImage 'miku.gif'
+    super 32, 32, x, y
+    @setImage 'player.png'
     @invincibleTimer = new Timer(45)
     @invincibleTimer.setComplete ->
       @stop()

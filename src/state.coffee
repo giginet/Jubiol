@@ -50,6 +50,7 @@ class MainState extends State
     super
     @stage = @scene.stage
     @stage.changeLevel Jubiol.config.INITIAL_LEVEL
+    Sound.load("#{Jubiol.config.SOUND_PATH}start.wav", 'audio/wav').play()
   setup : ->
     label = new Label ''
     label.text = 'Go'
@@ -87,6 +88,7 @@ class CheckState extends State
       return false
     else
       console.log "NG"
+      Sound.load("#{Jubiol.config.SOUND_PATH}beep.wav", 'audio/wav').play()
       return new GameOverState()
 
 class GameOverState extends State
@@ -109,8 +111,10 @@ class GameOverState extends State
     gameover.font = "64px #{Jubiol.config.FONT}"
   update : ->
     if Jubiol.game.input.a
+      Sound.load("#{Jubiol.config.SOUND_PATH}decide.wav", 'audio/wav').play()
       Jubiol.game.replaceScene(new MainScene())
     else if Jubiol.game.input.b
+      Sound.load("#{Jubiol.config.SOUND_PATH}decide.wav", 'audio/wav').play()
       Jubiol.game.replaceScene(new TitleScene())
     return true
 
@@ -134,10 +138,9 @@ class ClearState extends State
     clear.font = "64px #{Jubiol.config.FONT}"
   update : ->
     if Jubiol.game.input.a
+      Sound.load("#{Jubiol.config.SOUND_PATH}decide.wav", 'audio/wav').play()
       Jubiol.game.replaceScene(new MainScene())
     else if Jubiol.game.input.b
+      Sound.load("#{Jubiol.config.SOUND_PATH}decide.wav", 'audio/wav').play()
       Jubiol.game.replaceScene(new TitleScene())
     return true
-
-
-

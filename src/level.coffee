@@ -151,5 +151,5 @@ class Level7 extends Level
           bullet.v = new Vector(0.5, 0)
           bullet.v.rotate(Math.random() * 360)
           bullet.flag = true
-    if Math.random() * 30 is 0
+    if Math.floor(Math.random() * 60) is 0
       @redRate += 0.01

@@ -7,14 +7,22 @@ class Jubiol
     FONT : 'Helvetica',
     IMAGE_PATH : 'resources/images/',
     IMAGES : [
-      'miku.gif',
+      'player.png',
       'bullet.png',
       'bullet1.png',
-      'font.png',
       'kawaz.png'
     ],
     SOUND_PATH : 'resources/sounds/',
     SOUNDS : [
+      'count0.wav',
+      'count1.wav',
+      'count2.wav',
+      'count3.wav',
+      'count4.wav',
+      'count5.wav',
+      'count6.wav',
+      'bomb.wav',
+      'beep.wav',
     ],
     INITIAL_LEVEL : 1,
     LAST_LEVEL : 7,
@@ -29,6 +37,8 @@ class Jubiol
     Jubiol.config = @config
     for image in @config.IMAGES
       @game.preload("#{@config.IMAGE_PATH}#{image}")
+    for sound in @config.SOUNDS
+      @game.preload("#{@config.SOUND_PATH}#{sound}")
     root = new LogoScene()
     @game.onload = ->
       root.setup()
