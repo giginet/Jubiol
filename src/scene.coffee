@@ -9,11 +9,11 @@ class LogoScene extends Scene
       @addEventListener 'enterframe', @update
       @timer = new Timer(180)
       @timer.setComplete ->
-        Jubiol.game.replaceScene(new MainScene())
+        Jubiol.game.replaceScene(new TitleScene())
       @timer.play()
   update : ->
     if Jubiol.game.input.a
-      Jubiol.game.replaceScene(new MainScene())
+      Jubiol.game.replaceScene(new TitleScene())
     @timer.tick()
     if @timer.now() < 60
       @kawaz.opacity += 1.0/60
@@ -29,21 +29,60 @@ class TitleScene extends Scene
     @label.x = 195
     @label.y = -50
     @addEventListener 'enterframe', @update
+    @timer = new Timer(50)
+    @timer.play()
+    scene = @
+    @timer.setComplete ->
+      play = new Label "Play"
+      howto = new Label "Howto"
+      kawaz = new Label "Kawaz"
+      cursor = new Label ">"
+      play.x = 295
+      play.y = 240
+      howto.x = 285
+      howto.y = 300
+      kawaz.x = 280
+      kawaz.y = 360
+      cursor.x = 240
+      cursor.y = 240
+      cursor.addEventListener 'enterframe', ->
+        @menu ?= 0
+        @press ?= false
+        if Jubiol.game.input.down
+          unless @press
+            Sound.load("#{Jubiol.config.SOUND_PATH}cursor.wav", 'audio/wav').play()
+            @press = true
+            ++@menu
+        else if Jubiol.game.input.up
+          unless @press
+            Sound.load("#{Jubiol.config.SOUND_PATH}cursor.wav", 'audio/wav').play()
+            @press = true
+            --@menu
+        else if Jubiol.game.input.a
+          return if @press
+          @press = true
+          Sound.load("#{Jubiol.config.SOUND_PATH}decide.wav", 'audio/wav').play()
+          if @menu is 0
+            Jubiol.game.replaceScene(new MainScene())
+          else if @menu is 1
+            window.open "http://www.kawaz.org/projects/jubiol/"
+          else if @menu is 2
+            window.open "http://www.kawaz.org/"
+        else
+          @press = false
+        @menu = (@menu + 3) % 3
+        @y = 240 + 60 * @menu
+      [play, howto, kawaz, cursor].each (v, i) ->
+        v.font = "36px #{Jubiol.config.FONT}"
+      scene.addChild play
+      scene.addChild howto
+      scene.addChild kawaz
+      scene.addChild cursor
     @addChild @label
   update : ->
-    unless @label.y >= 82
-      @label.y += 3
-    else if @label.y is 82
-      play = new Label "Play"
-      kawaz = new Label "Kawaz"
-      play.x = 295
-      play.y = 270
-      play.font = "36px #{Jubiol.config.FONT}"
-      kawaz.x = 280
-      kawaz.y = 340
-      kawaz.font = "36px #{Jubiol.config.FONT}"
-      @addChild play
-      @addChild kawaz
+    @timer.tick()
+    unless @timer.isOver()
+      @label.y = -50 + 3 * @timer.now()
 
 class MainScene extends Scene
   constructor : ->

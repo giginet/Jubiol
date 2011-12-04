@@ -1,7 +1,7 @@
 class Stage extends Group
   constructor : ->
     super
-    @player = new Player 138, 288
+    @player = new Player Jubiol.config.WIDTH /2 - 16, 288
     @addChild @player
     @bullets = new Group()
     @addChild @bullets
@@ -75,4 +75,5 @@ class Counter
     base = Jubiol.game.stage.level.level * 1000
     score = Math.round(base + @total * 100 - 200 * @calcRate())
     score = 0 if score < 0
+    score *= 2 if @total isnt 0 and @total is @count
     return score
