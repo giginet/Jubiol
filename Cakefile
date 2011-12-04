@@ -7,10 +7,12 @@ FILES = [
   'kwing/lib/array.coffee',
   'kwing/lib/timer.coffee',
   'src/main.coffee',
+  'src/sprite.coffee',
+  'src/player.coffee',
+  'src/bullet.coffee',
   'src/state.coffee',
   'src/level.coffee',
   'src/stage.coffee',
-  'src/chara.coffee',
   'src/scene.coffee'
 ]
 HTMLFILE = 'index.html'

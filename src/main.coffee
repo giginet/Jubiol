@@ -24,7 +24,7 @@ class Jubiol extends Game
       'bomb.wav',
       'beep.wav',
     ],
-    INITIAL_LEVEL : 7,
+    INITIAL_LEVEL : 1,
     LAST_LEVEL : 7,
     LEVEL_TIME : 30
   }

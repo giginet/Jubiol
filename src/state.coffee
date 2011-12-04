@@ -81,11 +81,9 @@ class CheckState extends State
   checkDeath : ->
     rate = @scene.counter.calcRate()
     if rate < 0.05
-      console.log "OK"
       @scene.stage.player.invincibleTimer.play()
       return false
     else
-      console.log "NG"
       Sound.load("#{Jubiol.config.SOUND_PATH}beep.wav", 'audio/wav').play()
       return new GameOverState()
 
@@ -143,7 +141,7 @@ class ClearState extends GameEndState
     clear = new Label("Clear!")
     clear.x = 230
     clear.y = 200
-    clear.width = 500
+    clear.width = 300
     clear.scaleX = 5
     clear.scaleY = 5
     clear.font = "64px #{Jubiol.config.FONT}"
