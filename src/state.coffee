@@ -48,7 +48,7 @@ class MainState extends State
     super
     @stage = @scene.stage
     @stage.changeLevel Jubiol.config.INITIAL_LEVEL
-    Sound.load("#{Jubiol.config.SOUND_PATH}start.wav", 'audio/wav').play()
+    Jukebox.play("start.wav")
   setup : ->
     label = new Label ''
     label.text = 'Go'
@@ -84,7 +84,7 @@ class CheckState extends State
       @scene.stage.player.invincibleTimer.play()
       return false
     else
-      Sound.load("#{Jubiol.config.SOUND_PATH}beep.wav", 'audio/wav').play()
+      Jukebox.play('beep.wav')
       return new GameOverState()
 
 class GameEndState extends State
@@ -116,10 +116,10 @@ class GameEndState extends State
     @timer.tick()
     return true unless @timer.isOver()
     if Jubiol.game.input.a
-      Sound.load("#{Jubiol.config.SOUND_PATH}decide.wav", 'audio/wav').play()
+      Jukebox.play('decide.wav')
       Jubiol.game.replaceScene(new MainScene())
     else if Jubiol.game.input.b
-      Sound.load("#{Jubiol.config.SOUND_PATH}decide.wav", 'audio/wav').play()
+      Jukebox.play('decide.wav')
       Jubiol.game.replaceScene(new TitleScene())
     return true
 

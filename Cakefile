@@ -6,6 +6,7 @@ FILES = [
   'kwing/lib/vector.coffee',
   'kwing/lib/array.coffee',
   'kwing/lib/timer.coffee',
+  'kwing/lib/jukebox.coffee',
   'src/main.coffee',
   'src/sprite.coffee',
   'src/player.coffee',

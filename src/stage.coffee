@@ -14,14 +14,14 @@ class Stage extends Group
       if @level.level is Jubiol.config.LAST_LEVEL
         return new ClearState()
       @changeLevel @level.level + 1
-      Sound.load("#{Jubiol.config.SOUND_PATH}levelup.wav", 'audio/wav').play()
+      Jukebox.play('levelup.wav')
     for bullet in @bullets.childNodes.clone()
       bullet.update()
       if @player.within(bullet, 10)
         if @player.invincibleTimer.isActive() 
-          Sound.load("#{Jubiol.config.SOUND_PATH}metal.wav", 'audio/wav').play()
+          Jukebox.play('metal.wav')
         else
-          Sound.load("#{Jubiol.config.SOUND_PATH}bomb.wav", 'audio/wav').play()
+          Jukebox.play('bomb.wav')
           return new CheckState()
     return false
   changeLevel : (lv) ->
@@ -58,8 +58,7 @@ class Counter
       @soundCount = 0
     if Jubiol.game.input.a
       if not @pressA
-        sound = Sound.load("#{Jubiol.config.SOUND_PATH}count#{@soundCount}.wav", 'audio/wav')
-        sound.play()
+        Jukebox.play("count#{@soundCount}.wav")
         ++@count
         if @soundCount is 6
           @soundReverse = true

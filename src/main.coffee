@@ -23,6 +23,11 @@ class Jubiol extends Game
       'count6.wav',
       'bomb.wav',
       'beep.wav',
+      'cursor.wav',
+      'decide.wav',
+      'levelup.wav',
+      'metal.wav',
+      'start.wav'
     ],
     INITIAL_LEVEL : 1,
     LAST_LEVEL : 7,
@@ -30,19 +35,21 @@ class Jubiol extends Game
   }
   constructor : ->
     super @config.WIDTH, @config.HEIGHT
-    @.fps = @config.FPS
-    @.keybind(90, 'a')
-    @.keybind(88, 'b')
+    @fps = @config.FPS
+    @keybind(90, 'a')
+    @keybind(88, 'b')
     Jubiol.game = @
     Jubiol.config = @config
     for image in @config.IMAGES
-      @.preload("#{@config.IMAGE_PATH}#{image}")
-
+      @preload("#{@config.IMAGE_PATH}#{image}")
+    Jukebox.root = @config.SOUND_PATH
+    for sound in @config.SOUNDS
+      Jukebox.load sound
     root = new LogoScene()
-    @.onload = ->
+    @onload = ->
       root.setup()
       @pushScene root
-    @.start()
+    @start()
 
 window.onload = ->
   new Jubiol()

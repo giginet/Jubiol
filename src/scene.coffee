@@ -50,18 +50,18 @@ class TitleScene extends Scene
         @press ?= false
         if Jubiol.game.input.down
           unless @press
-            Sound.load("#{Jubiol.config.SOUND_PATH}cursor.wav", 'audio/wav').play()
+            Jukebox.play('cursor.wav')
             @press = true
             ++@menu
         else if Jubiol.game.input.up
           unless @press
-            Sound.load("#{Jubiol.config.SOUND_PATH}cursor.wav", 'audio/wav').play()
+            Jukebox.play('cursor.wav')
             @press = true
             --@menu
         else if Jubiol.game.input.a
           return if @press
           @press = true
-          Sound.load("#{Jubiol.config.SOUND_PATH}decide.wav", 'audio/wav').play()
+          Jukebox.play('decide.wav')
           if @menu is 0
             Jubiol.game.replaceScene(new MainScene())
           else if @menu is 1
