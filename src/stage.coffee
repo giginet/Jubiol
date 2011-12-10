@@ -50,18 +50,25 @@ class Counter
     @pressA = false
     @countTimer = new Timer(30)
     @soundCount = 0
+    @soundReverse = false
   update : ->
     @countTimer.tick()
     if @countTimer.isOver()
       @countTimer.stop()
       @soundCount = 0
     if Jubiol.game.input.a
-      if !@pressA
+      if not @pressA
         sound = Sound.load("#{Jubiol.config.SOUND_PATH}count#{@soundCount}.wav", 'audio/wav')
         sound.play()
         ++@count
-        if @soundCount < 6
+        if @soundCount is 6
+          @soundReverse = true
+        else if @soundReverse and @soundCount is 0
+          @soundReverse = false
+        if @soundCount < 6 and not @soundReverse
           ++@soundCount
+        else if @soundReverse and @soundCount > 0
+          --@soundCount
         @countTimer.reset()
         @countTimer.play()
         @pressA = true
