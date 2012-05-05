@@ -44,7 +44,7 @@ class Jubiol extends Game
       @preload("#{@config.IMAGE_PATH}#{image}")
     Jukebox.root = @config.SOUND_PATH
     for sound in @config.SOUNDS
-      Jukebox.load sound
+      Jukebox._loadSound sound, 'audio/wav'
     root = new LogoScene()
     @onload = ->
       root.setup()
